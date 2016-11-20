@@ -30,11 +30,10 @@ public class MainActivity extends AppCompatActivity {
                         intent = new Intent(getApplicationContext(), Convertor.class);
                         startActivity(intent);
                         break;
-
-                    case R.id.btnMap:
-                        intent = new Intent(getApplicationContext(), MapsActivity.class);
-                        startActivity(intent);
-                        break;
+//                        case R.id.btnMap:
+//                        intent = new Intent(getApplicationContext(), MapsActivity.class);
+//                        startActivity(intent);
+//                        break;
 
                     case R.id.memo:
                         intent = new Intent(getApplicationContext(), Memo.class);
