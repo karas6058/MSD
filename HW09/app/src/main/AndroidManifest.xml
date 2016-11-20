@@ -11,9 +11,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoadingActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".LoadingActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -24,26 +25,31 @@
         </activity>
         <activity
             android:name=".Calculator"
-            android:label="계산기"></activity>
+            android:label="계산기" />
         <activity
             android:name=".Convertor"
-            android:label="단위변환기"></activity>
+            android:label="단위변환기" />
         <activity
             android:name=".Memo"
-            android:label="메모"></activity>
+            android:label="메모" />
         <activity
             android:name=".Music"
-            android:label="뮤직"></activity>
+            android:label="뮤직" />
         <activity
-            android:theme="@style/Theme.AppCompat"
             android:name=".Phonebook"
-            android:label="주소록"></activity>
+            android:label="주소록"
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".Setting"
-            android:label="설정"></activity>
+            android:label="설정" />
         <activity
             android:name=".Web"
-            android:label="웹브라우저"></activity>
+            android:label="웹브라우저" />
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

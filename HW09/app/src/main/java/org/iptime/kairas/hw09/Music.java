@@ -1,24 +1,20 @@
 package org.iptime.kairas.hw09;
 
-import android.media.MediaPlayer;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 
 public class Music extends AppCompatActivity {
-    MediaPlayer player;
-    TextView tv;
     ListView lv;
     ArrayList<String> song = new ArrayList<String>();
 
@@ -27,7 +23,26 @@ public class Music extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music);
 
-        player = MediaPlayer.create(this, R.raw.music1);
+        Button btn_play = (Button) findViewById(R.id.play);
+        Button btn_stop = (Button) findViewById(R.id.stop);
+
+        btn_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Music.this, MyService.class);
+                startService(intent);
+            }
+        });
+
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Music.this, MyService.class);
+                stopService(intent);
+            }
+        });
+
+
         lv = (ListView) findViewById(R.id.listview);
         updateSonglist();
 
@@ -36,7 +51,9 @@ public class Music extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Field[] fields = R.raw.class.getFields();
                 Uri music = Uri.parse("android.resource://" + getPackageName() + "/raw/" + fields[position + 1].getName());
-                playSong(music);
+                Intent intent = new Intent(Music.this, MyService.class);
+                intent.putExtra("file", music);
+                startService(intent);
             }
         });
     }
@@ -48,32 +65,5 @@ public class Music extends AppCompatActivity {
         }
         ArrayAdapter<String> songList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, song);
         lv.setAdapter(songList);
-    }
-
-    private void playSong(Uri songPath) {
-        try {
-            player.reset();
-            player= MediaPlayer.create(this, songPath);
-            play(null);
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void play(View view) {
-        if (!player.isPlaying()) {
-            player.start();
-            tv = (TextView) this.findViewById(R.id.playStatus);
-            tv.setText("재생중");
-        }
-    }
-
-    public void stop(View view) {
-        Log.i("what stop", String.valueOf(player));
-        if (player.isPlaying()) {
-            System.out.println(player);
-            player.pause();
-            tv.setText("정지");
-        }
     }
 }
