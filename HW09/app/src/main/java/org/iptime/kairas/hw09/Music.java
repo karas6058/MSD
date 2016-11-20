@@ -1,5 +1,7 @@
 package org.iptime.kairas.hw09;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,10 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-
+import android.widget.TextView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-
 
 public class Music extends AppCompatActivity {
     ListView lv;
@@ -23,14 +24,23 @@ public class Music extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music);
 
-        Button btn_play = (Button) findViewById(R.id.play);
-        Button btn_stop = (Button) findViewById(R.id.stop);
+        final Button btn_play = (Button) findViewById(R.id.play);
+        final Button btn_stop = (Button) findViewById(R.id.stop);
+        final TextView tv = (TextView) findViewById(R.id.playStatus);
+
+        ActivityManager manager = (ActivityManager) this.getSystemService(Activity.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo serviceInfo : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if ("org.iptime.kairas.hw09.MyService".equals(serviceInfo.service.getClassName())) {
+                tv.setText("재생");
+            }
+        }
 
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Music.this, MyService.class);
                 startService(intent);
+                tv.setText("재생");
             }
         });
 
@@ -39,6 +49,7 @@ public class Music extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Music.this, MyService.class);
                 stopService(intent);
+                tv.setText("중지");
             }
         });
 
@@ -52,7 +63,7 @@ public class Music extends AppCompatActivity {
                 Field[] fields = R.raw.class.getFields();
                 Uri music = Uri.parse("android.resource://" + getPackageName() + "/raw/" + fields[position + 1].getName());
                 Intent intent = new Intent(Music.this, MyService.class);
-                intent.putExtra("file", music);
+                intent.putExtra("file", music.toString());
                 startService(intent);
             }
         });
