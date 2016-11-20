@@ -1,0 +1,2 @@
+include ':app', 'exp4j'
+project('exp4j').projectDir = new File('exp4j-0.4.7')

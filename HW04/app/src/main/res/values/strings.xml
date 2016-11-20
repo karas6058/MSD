@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">hw04</string>
+    <string-array name="change_list">
+        <item>cm</item>
+        <item>m</item>
+        <item>km</item>
+    </string-array>
+</resources>

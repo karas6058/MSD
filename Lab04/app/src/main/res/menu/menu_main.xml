@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="org.iptime.kairas83.lab04_1.MainActivity">
+    <item
+        android:id="@+id/apple"
+        android:title="사과" />
+    <item
+        android:id="@+id/grape"
+        android:title="포도" />
+    <item
+        android:id="@+id/banana"
+        android:title="바나나" />
+</menu>
