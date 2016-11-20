@@ -47,7 +47,7 @@ public class Phonebook extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                AlertDialog alert = new AlertDialog.Builder(this).create();
+                AlertDialog alert = new AlertDialog.Builder(getApplicationContext()).create();
                 alert.setTitle("주소록");
                 alert.setButton(AlertDialog.BUTTON_POSITIVE, "확인", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
