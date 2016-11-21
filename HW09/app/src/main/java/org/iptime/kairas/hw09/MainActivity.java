@@ -3,16 +3,23 @@ package org.iptime.kairas.hw09;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     public static boolean onPass;
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MyService.class);
+        stopService(intent);
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         View.OnClickListener buttonListener = new View.OnClickListener() {
 

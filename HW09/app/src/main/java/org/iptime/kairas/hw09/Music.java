@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,16 +18,16 @@ import java.util.ArrayList;
 
 public class Music extends AppCompatActivity {
     ListView lv;
+    TextView tv;
     ArrayList<String> song = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music);
-
-        final Button btn_play = (Button) findViewById(R.id.play);
         final Button btn_stop = (Button) findViewById(R.id.stop);
-        final TextView tv = (TextView) findViewById(R.id.playStatus);
+        final Button btn_play = (Button) findViewById(R.id.play);
+        tv = (TextView) findViewById(R.id.playStatus);
 
         ActivityManager manager = (ActivityManager) this.getSystemService(Activity.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo serviceInfo : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -65,6 +66,7 @@ public class Music extends AppCompatActivity {
                 Intent intent = new Intent(Music.this, MyService.class);
                 intent.putExtra("file", music.toString());
                 startService(intent);
+                tv.setText("재생");
             }
         });
     }
