@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.iptime.kairas.hw09">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".LoadingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Calculator"
+            android:label="계산기" />
+        <activity
+            android:name=".Convertor"
+            android:label="단위변환기" />
+        <activity
+            android:name=".Memo"
+            android:label="메모" />
+        <activity
+            android:name=".Music"
+            android:label="뮤직" />
+        <activity
+            android:name=".Phonebook"
+            android:label="주소록" />
+        <activity
+            android:name=".Setting"
+            android:label="설정" />
+        <activity
+            android:name=".Web"
+            android:label="웹브라우저" />
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true"></service>
+    </application>
+
+</manifest>
