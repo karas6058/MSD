@@ -43,7 +43,6 @@
         <activity
             android:name=".Web"
             android:label="웹브라우저" />
-
         <service
             android:name=".MyService"
             android:enabled="true"
