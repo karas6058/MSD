@@ -19,7 +19,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,8 +36,7 @@
             android:label="뮤직" />
         <activity
             android:name=".Phonebook"
-            android:label="주소록"
-            android:theme="@style/Theme.AppCompat" />
+            android:label="주소록" />
         <activity
             android:name=".Setting"
             android:label="설정" />

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-public class Music extends AppCompatActivity {
+public class Music extends Activity {
     ListView lv;
     TextView tv;
     ArrayList<String> song = new ArrayList<String>();

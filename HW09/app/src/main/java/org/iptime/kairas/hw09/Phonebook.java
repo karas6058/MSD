@@ -1,14 +1,12 @@
 package org.iptime.kairas.hw09;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class Phonebook extends AppCompatActivity {
+public class Phonebook extends Activity {
 
     DBHelper helper;
     SQLiteDatabase db;
@@ -30,7 +28,7 @@ public class Phonebook extends AppCompatActivity {
         setContentView(R.layout.activity_phonebook);
         helper = new DBHelper(this);
         listView = (ListView) findViewById(R.id.listview);
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1);
+        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_item);
 
         listView.setAdapter(adapter);
 
@@ -47,13 +45,6 @@ public class Phonebook extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                AlertDialog alert = new AlertDialog.Builder(getApplicationContext()).create();
-                alert.setTitle("주소록");
-                alert.setButton(AlertDialog.BUTTON_POSITIVE, "확인", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
 
                 String name = parent.getAdapter().getItem(position).toString();
                 Cursor cursor = db.rawQuery("SELECT name, tel FROM contacts WHERE name = '" +  name + "';", null);
@@ -61,8 +52,18 @@ public class Phonebook extends AppCompatActivity {
                 while (cursor.moveToNext()) {
                     tel = cursor.getString(1);
                 }
-                alert.setMessage(name + " / " + tel);
-                alert.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(Phonebook.this);
+                builder.setTitle("주소록")
+                        .setMessage(name + "\n" + tel)
+                        .setCancelable(true)
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int whichButton){
+                                dialog.dismiss();
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();    // 알림창 객체 생성
+                dialog.show();    // 알림창 띄우기
             }
 
         });

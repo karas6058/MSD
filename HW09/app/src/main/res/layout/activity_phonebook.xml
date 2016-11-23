@@ -7,8 +7,7 @@
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    tools:context=".MainActivity"
-    android:theme="@style/Theme.AppCompat">
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/textView1"
@@ -59,5 +58,6 @@
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/button2" />
+        android:layout_below="@id/button2">
+    </ListView>
 </RelativeLayout>

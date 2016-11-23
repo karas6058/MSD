@@ -1,5 +1,6 @@
 package org.iptime.kairas.hw09;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-public class Web extends AppCompatActivity {
+public class Web extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
