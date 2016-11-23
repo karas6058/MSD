@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.iptime.kairas.hw09">
+    package="org.iptime.kairas.hw11">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -12,39 +12,39 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoadingActivity"
+            android:name="org.iptime.kairas.hw11.LoadingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name="org.iptime.kairas.hw11.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Calculator"
+            android:name="org.iptime.kairas.hw11.Calculator"
             android:label="계산기" />
         <activity
-            android:name=".Convertor"
+            android:name="org.iptime.kairas.hw11.Convertor"
             android:label="단위변환기" />
         <activity
-            android:name=".Memo"
+            android:name="org.iptime.kairas.hw11.Memo"
             android:label="메모" />
         <activity
-            android:name=".Music"
+            android:name="org.iptime.kairas.hw11.Music"
             android:label="뮤직" />
         <activity
-            android:name=".Phonebook"
+            android:name="org.iptime.kairas.hw11.Phonebook"
             android:label="주소록" />
         <activity
-            android:name=".Setting"
+            android:name="org.iptime.kairas.hw11.Setting"
             android:label="설정" />
         <activity
-            android:name=".Web"
+            android:name="org.iptime.kairas.hw11.Web"
             android:label="웹브라우저" />
         <service
-            android:name=".MyService"
+            android:name="org.iptime.kairas.hw11.MyService"
             android:enabled="true"
             android:exported="true"></service>
     </application>
