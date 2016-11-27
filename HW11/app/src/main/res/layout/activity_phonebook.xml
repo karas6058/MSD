@@ -14,14 +14,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tel"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignTop="@+id/name"
         android:text="이름"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="전화번호"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_above="@+id/button1"
+        android:layout_alignTop="@+id/tel" />
 
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_marginLeft="82dp"
         android:layout_marginTop="5dp"
         android:ems="10"
@@ -38,7 +52,7 @@
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="match_parent"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tel"
         android:onClick="insert"
@@ -46,18 +60,27 @@
 
     <Button
         android:id="@+id/button2"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/button1"
+        android:layout_alignBottom="@+id/button1"
+        android:onClick="delete"
+        android:text="삭제" />
+
+    <Button
+        android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button1"
-        android:layout_centerVertical="true"
-        android:onClick="search"
-        android:text="탐색" />
+        android:layout_below="@id/button2"
+        android:onClick="load"
+        android:text="불러오기" />
 
-
-    <ListView
-        android:id="@+id/listview"
+    <TextView
+        android:id="@+id/tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/button2">
-    </ListView>
+        android:layout_below="@id/button3">
+    </TextView>
+
+
 </RelativeLayout>

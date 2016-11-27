@@ -1,96 +1,129 @@
 package org.iptime.kairas.hw11;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.provider.Contacts;
+import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.TextViewCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class Phonebook extends Activity {
 
-    DBHelper helper;
-    SQLiteDatabase db;
     EditText edit_name, edit_tel;
-    ListView listView;
-    ArrayAdapter<String> adapter;
+
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phonebook);
-        helper = new DBHelper(this);
-        listView = (ListView) findViewById(R.id.listview);
-        adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_item);
 
-        listView.setAdapter(adapter);
-
-        try {
-            db = helper.getWritableDatabase();
-        } catch (SQLiteException ex) {
-            db = helper.getReadableDatabase();
+        if (ContextCompat.checkSelfPermission(Phonebook.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(Phonebook.this, Manifest.permission.READ_CONTACTS)) {
+                ActivityCompat.requestPermissions(Phonebook.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            } else {
+                ActivityCompat.requestPermissions(Phonebook.this, new String[]{Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            }
         }
 
         edit_name = (EditText) findViewById(R.id.name);
         edit_tel = (EditText) findViewById(R.id.tel);
+    }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onRequestPermissionsResult(int requestCode, String permission[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                } else {
 
-                String name = parent.getAdapter().getItem(position).toString();
-                Cursor cursor = db.rawQuery("SELECT name, tel FROM contacts WHERE name = '" +  name + "';", null);
-                String tel = "";
-                while (cursor.moveToNext()) {
-                    tel = cursor.getString(1);
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(Phonebook.this);
-                builder.setTitle("주소록")
-                        .setMessage(name + "\n" + tel)
-                        .setCancelable(true)
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener(){
-                            public void onClick(DialogInterface dialog, int whichButton){
-                                dialog.dismiss();
-                            }
-                        });
-
-                AlertDialog dialog = builder.create();    // 알림창 객체 생성
-                dialog.show();    // 알림창 띄우기
+                return;
             }
-
-        });
-    }
-    public void insert(View target) {
-        String name = edit_name.getText().toString();
-        String tel = edit_tel.getText().toString();
-        db.execSQL("INSERT INTO contacts VALUES (null, '" + name + "','" + tel + "');");
-        Toast.makeText(getApplicationContext(), "추가됨", Toast.LENGTH_SHORT).show();
-
-        edit_name.setText("");
-        edit_tel.setText("");
-
-        adapter.add(name.toString());
-
-    }
-
-    public void search(View target) {
-        String name = edit_name.getText().toString();
-        Cursor cursor;
-        cursor = db.rawQuery("SELECT name, tel FROM contacts WHERE name = '" + name + "';", null);
-
-        while (cursor.moveToNext()) {
-            String tel = cursor.getString(1);
-            edit_tel.setText(tel);
         }
     }
 
-}
+    public void load(View view) {
+        TextView tv = (TextView) findViewById(R.id.tv);
 
+        Cursor c = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
+
+        String str = "";
+        c.moveToFirst();
+
+        do {
+            String name = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            String phoneNumber = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            str += "이름: " + name + "/폰번호: " + phoneNumber + "\n";
+        } while (c.moveToNext());
+
+        tv.setText(str);
+    }
+
+    public void insert(View view) {
+        String name = edit_name.getText().toString();
+        String tel = edit_tel.getText().toString();
+
+        try {
+            ArrayList<ContentProviderOperation> list = new ArrayList<>();
+            list.add(
+                    ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                            .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                            .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                            .build()
+            );
+
+            list.add(
+                    ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                            .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                            .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                            .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name)   //이름
+                            .build()
+            );
+
+            list.add(
+                    ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                            .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                            .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                            .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, tel)           //전화번호
+                            .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)   //번호타입(Type_Mobile : 모바일)
+                            .build()
+            );
+
+            getApplicationContext().getContentResolver().applyBatch(ContactsContract.AUTHORITY, list);  //주소록추가
+            list.clear();   //리스트 초기화
+
+            Toast.makeText(this, "연락처가 추가되었습니다", Toast.LENGTH_LONG).show();
+            load(view);
+
+        } catch(Exception e) {
+            Toast.makeText(this, "연락처가 추가가 실패하였습니다", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void delete(View view) {
+        getContentResolver().delete((ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts.CONTACT_ID + "="" + contractid, null)");
+    }
+}
