@@ -70,6 +70,13 @@ public class Phonebook extends Activity {
 
         Cursor c = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
 
+        if (c.getCount() <  1) {
+            tv.setText("연락처가 없습니다");
+            Toast.makeText(this, "연락처가 없습니다", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
         String str = "";
         c.moveToFirst();
 
@@ -124,6 +131,15 @@ public class Phonebook extends Activity {
     }
 
     public void delete(View view) {
-        getContentResolver().delete((ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts.CONTACT_ID + "="" + contractid, null)");
+        String name = edit_name.getText().toString();
+
+        try {
+            getApplicationContext().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY + "=" + name, null);
+            Toast.makeText(this, "연락처가 삭제되었습니다", Toast.LENGTH_LONG).show();
+            load(view);
+        } catch (Exception e) {
+            Toast.makeText(this, "연락처 삭제가 실패하였습니다", Toast.LENGTH_LONG).show();
+        }
+
     }
 }
