@@ -1,35 +1,68 @@
-package org.iptime.kairas.hw11;
+package org.iptime.kairas.hw07;
 
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class Music extends Activity {
     ListView lv;
     TextView tv;
-    ArrayList<String> song = new ArrayList<String>();
+    ArrayList<String> song;
+    private static SeekBar seekBar;
+    private static Handler seekHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music);
+
+        song = new ArrayList<String>();
+
         final Button btn_stop = (Button) findViewById(R.id.stop);
         final Button btn_play = (Button) findViewById(R.id.play);
+
         tv = (TextView) findViewById(R.id.playStatus);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekHandler = new Handler();
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (MyService.mediaPlayer.isPlaying()) {
+                    MyService.mediaPlayer.seekTo(progress);
+                    seekBar.setProgress(progress);
+                }
+            }
+        });
+
 
         ActivityManager manager = (ActivityManager) this.getSystemService(Activity.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo serviceInfo : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if ("org.iptime.kairas.hw09.MyService".equals(serviceInfo.service.getClassName())) {
+            if ("org.iptime.kairas.hw07.MyService".equals(serviceInfo.service.getClassName())) {
                 tv.setText("재생");
             }
         }
@@ -37,6 +70,7 @@ public class Music extends Activity {
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                seekHandler.postDelayed(run, 1000);
                 Intent intent = new Intent(Music.this, MyService.class);
                 startService(intent);
                 tv.setText("재생");
@@ -77,4 +111,19 @@ public class Music extends Activity {
         ArrayAdapter<String> songList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, song);
         lv.setAdapter(songList);
     }
+
+    private static Runnable run = new Runnable() {
+
+        public void run() {
+
+            if (MyService.mediaPlayer.isPlaying()) {
+                int mediaPos_new = MyService.mediaPlayer.getCurrentPosition();
+                int mediaMax_new = MyService.mediaPlayer.getDuration();
+
+                seekBar.setMax(mediaMax_new);
+                seekBar.setProgress(mediaPos_new);
+                seekHandler.postDelayed(run, 1000);
+            }
+        }
+    };
 }

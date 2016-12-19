@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.iptime.kairas.hw11">
+    package="org.iptime.kairas.hw07">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
 
     <application
         android:allowBackup="true"
@@ -14,41 +17,51 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="org.iptime.kairas.hw11.LoadingActivity"
+            android:name="org.iptime.kairas.hw07.LoadingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
-        <activity android:name="org.iptime.kairas.hw11.MainActivity">
+        <activity android:name="org.iptime.kairas.hw07.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="org.iptime.kairas.hw11.Calculator"
+            android:name="org.iptime.kairas.hw07.Calculator"
             android:label="계산기" />
         <activity
-            android:name="org.iptime.kairas.hw11.Convertor"
+            android:name="org.iptime.kairas.hw07.Convertor"
             android:label="단위변환기" />
         <activity
-            android:name="org.iptime.kairas.hw11.Memo"
+            android:name="org.iptime.kairas.hw07.Memo"
             android:label="메모" />
         <activity
-            android:name="org.iptime.kairas.hw11.Music"
+            android:name="org.iptime.kairas.hw07.Music"
             android:label="뮤직" />
         <activity
-            android:name="org.iptime.kairas.hw11.Phonebook"
+            android:name="org.iptime.kairas.hw07.Phonebook"
             android:label="주소록" />
         <activity
-            android:name="org.iptime.kairas.hw11.Setting"
+            android:name="org.iptime.kairas.hw07.Setting"
             android:label="설정" />
         <activity
-            android:name="org.iptime.kairas.hw11.Web"
+            android:name="org.iptime.kairas.hw07.Web"
             android:label="웹브라우저" />
+
         <service
-            android:name="org.iptime.kairas.hw11.MyService"
+            android:name="org.iptime.kairas.hw07.MyService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name="org.iptime.kairas.hw07.Map"
+            android:label="@string/title_activity_map"></activity>
     </application>
 
 </manifest>

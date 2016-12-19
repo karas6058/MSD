@@ -1,4 +1,4 @@
-package org.iptime.kairas.hw11;
+package org.iptime.kairas.hw07;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,10 +36,11 @@ public class MainActivity extends Activity {
                         intent = new Intent(getApplicationContext(), Convertor.class);
                         startActivity(intent);
                         break;
-//                        case R.id.btnMap:
-//                        intent = new Intent(getApplicationContext(), MapsActivity.class);
-//                        startActivity(intent);
-//                        break;
+
+                    case R.id.btnMap:
+                        intent = new Intent(getApplicationContext(), Map.class);
+                        startActivity(intent);
+                        break;
 
                     case R.id.memo:
                         intent = new Intent(getApplicationContext(), Memo.class);

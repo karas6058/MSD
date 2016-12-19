@@ -1,4 +1,4 @@
-package org.iptime.kairas.hw11;
+package org.iptime.kairas.hw07;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

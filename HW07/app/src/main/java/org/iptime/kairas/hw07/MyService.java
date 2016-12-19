@@ -1,4 +1,4 @@
-package org.iptime.kairas.hw11;
+package org.iptime.kairas.hw07;
 
 import android.app.Service;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 public class MyService extends Service {
-    private MediaPlayer mediaPlayer = null;
+    public static MediaPlayer mediaPlayer = null;
 
     @Override
     public void onStart(Intent intent, int startId) {

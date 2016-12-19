@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Convertor">
+    tools:context="org.iptime.kairas.hw06.Convertor">
 
     <Spinner
         android:layout_width="150dp"
