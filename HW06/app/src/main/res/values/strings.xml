@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HW09</string>
+    <string name="app_name">HW06</string>
     <string-array name="change_list">
         <item>cm</item>
         <item>m</item>
