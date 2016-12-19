@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <EditTextPreference
+        android:key="edit"
+        android:title="텍스트 바꾸기"
+        android:defaultValue="loading"
+        android:summary="텍스트를 설정합니다." />
+
+    <RingtonePreference
+        android:key="ringtone"
+        android:title="벨소리선택"
+        android:showDefault="true"
+        android:showSilent="true"
+        android:summary="벨소리를 선택합니다." />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="loading"
+        android:title="로딩화면"
+        android:summary="로딩화면을 설정합니다." />
+
+</PreferenceScreen>
